@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang=”en”>
+
+<head>
+  <title>It's going tibia K.</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- <link rel="shortcut icon" href="favicon.ico" /> -->
+  <link href="https://fonts.googleapis.com/css?family=Poiret+One" rel="stylesheet">
+  <!-- <link rel="stylesheet" type="text/css" href="tibiaList.css"> -->
+</head>
+
+<body>
+  <form id="newItem" action="/items" method="POST">
+    <div id="inputs">
+      <input name="itemSerial" type="number" placeholder="code"required/> <!-- item number /makes the field required-->
+      <input name="itemName" type="text" placeholder="name"required/>
+      <input name="itemQuantity" type="number" placeholder="amount" required/>
+      <input name="reusable" type="checkbox" />
+      <button type="submit">Submit</button>
+    </div>
+  </form>
+  <div id="container">
+    <div class="item" id="labels">
+      <p>Code</p><p>Name</p><p>Quantity</p><p></p>
+    </div>
+    <% for (var i = 0; i < items.length; i++)  {%>
+      <div class="item" id='<%=items[i].itemSerial %>'>
+        <p><%=items[i].itemSerial %></p>
+        <p><%=items[i].itemName %></p>
+        <p><%=items[i].itemQuantity %></p>
+        <button class="delbutton" >Delete</button>
+      </div>
+    <% } %>
+  </div>
+
+</body>
+
+<script>
+var dels = document.getElementsByClassName('delbutton')
+
+for (let i = 0; i < dels.length; i++) {
+  dels[i].addEventListener('click', function() {
+    let itemSerial = dels[i].parentElement.getAttribute('id')
+    dels[i].parentElement.parentElement.removeChild(dels[i].parentElement)
+    fetch('/items', {
+      method: 'delete',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        'itemSerial': itemSerial
+      })
+    })
+    .then(function(res) {
+      if (res.ok) return res.json()
+    }).
+    then(function(data) {
+      console.log(data)
+    })
+  })
+}
+</script>
+
+</html>

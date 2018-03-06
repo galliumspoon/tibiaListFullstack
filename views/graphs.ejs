@@ -1,0 +1,22 @@
+<html>
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- <link rel="shortcut icon" href="favicon.ico" /> -->
+</head>
+
+<body>
+  <table id="totalGraph">
+    <caption>Item Stock</caption>
+    <% for (var i = 0; i < items.length; i++) {%>
+      <tr class="iTim" id='<%=items[i].itemSerial %>'>
+        <th scope="row"><%=items[i].itemName %></th>
+        <td class="quant"><%=items[i].itemQuantity %></td>
+      </tr>
+    <% } %>
+  </table>
+</body>
+
+
+</html>

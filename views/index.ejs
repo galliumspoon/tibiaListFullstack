@@ -6,18 +6,18 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- <link rel="shortcut icon" href="favicon.ico" /> -->
-  <!-- <link href="https://fonts.googleapis.com/css?family=Poiret+One" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="tibiaList.css"> -->
+  <link href="https://fonts.googleapis.com/css?family=Poiret+One" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="tibiaList.css">
 </head>
 
 <body>
   <!-- will display to the public based on whether or not it is a child change -->
   <a href="/joinin">Join In!</a>
-  <a href="/graphs">Check out the Graphs!</a>
+  <!-- <a href="/graphs">Check out the Graphs!</a> -->
   <div id="container">
     <table id="itemsReusable">
       <caption>Reusable</caption>
-      <tr class="item disposable"><td>Code</td><td>Name</td><td>Quantity</td><td></td></tr>
+      <tr class="item disposable"><td>Code</td><td>Name</td><td>Quantity</td></tr>
       <% for (var i = 0; i < items.length; i++)  {%>
         <% if (items[i].itemReusable) {%>
           <tr class="item disposable" id='<%=items[i].itemSerial %>'>
@@ -30,7 +30,7 @@
     </table>
     <table id="itemsOneTime">
       <caption>Disposable</caption>
-      <tr><td>Code</td><td>Name</td><td>Quantity</td><td></td></tr>
+      <tr class="item reusable"><td>Code</td><td>Name</td><td>Quantity</td></tr>
       <% for (var i = 0; i < items.length; i++)  {%>
         <% if (items[i].itemReusable == null) {%>
           <tr class="item reusable" id='<%=items[i].itemSerial %>'>

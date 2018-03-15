@@ -1,4 +1,3 @@
-const cookieSession = require('cookie-session')
 const express = require('express');
 const bodyParser = require('body-parser')
 const app = express();
@@ -85,21 +84,21 @@ app.get('/', function (req, res) {
 
 })
 
-//graphs
-app.get('/graphs', function (req, res) {
-  db.collection('items').find().toArray(function(err, results) {
-    //getting keys for reusable graph
-    let reuseNums = getReuseNums(results)
-    let reuseKeys = getReuseKeys(reuseNums)
-
-    //getting keys for disposable graph
-    let disposeNums = getDisposableNums(results)
-    let disposeKeys = getDisposableKeys(disposeNums)
-
-
-    res.render('graphs.ejs', {items: results, reuseKeys: reuseKeys, disposeKeys: disposeKeys})
-  })
-})
+// //graphs
+// app.get('/graphs', function (req, res) {
+//   db.collection('items').find().toArray(function(err, results) {
+//     //getting keys for reusable graph
+//     let reuseNums = getReuseNums(results)
+//     let reuseKeys = getReuseKeys(reuseNums)
+//
+//     //getting keys for disposable graph
+//     let disposeNums = getDisposableNums(results)
+//     let disposeKeys = getDisposableKeys(disposeNums)
+//
+//
+//     res.render('graphs.ejs', {items: results, reuseKeys: reuseKeys, disposeKeys: disposeKeys})
+//   })
+// })
 
 // //admin access
 // app.get('/admin', function(req, res) {
@@ -128,28 +127,27 @@ app.get('/joinin', function(req, res) {
   res.render('joinin.ejs', {exists: null, error: null})
 })
 
+//everyone logged in page
+app.get('/add', function(req, res) {
+  // var passedVariable = req.query.isAdmin
+  //console.log(passedVariable)
+  // if (passedVariable != null) {
+    //console.log("logged in")
+    db.collection('items').find().toArray(function(err, results) {
+      res.render('add.ejs', {items: results})
+
+    })
+      //show/hide links based on admin
+  // }
+  // else {
+  //   res.redirect('/joinin');
+  // }
+})
+
 //logout
 app.get('/logout', function(req, res) {
   res.redirect('/joinin');
 });
-
-//everyone logged in page
-app.get('/add', function(req, res) {
-  var passedVariable = req.query.isAdmin
-  //console.log(passedVariable)
-  if (passedVariable != null) {
-    //console.log("logged in")
-    if (passedVariable) {
-      db.collection('items').find().toArray(function(err, results) {
-        res.render('add.ejs', {items: results, isAdmin: passedVariable})
-      })
-      //show/hide links based on admin
-    }
-    else {
-      res.redirect('/joinin');
-    }
-  }
-})
 
 //deleting an item
 app.delete('/items', function(req, res) {
@@ -201,7 +199,7 @@ app.post('/items', function (req, res) {
       if (err) return console.log(err)
 
       //console.log('saved to database')
-      res.redirect('/add/?isAdmin=true')
+      res.redirect('/add')
     })
  //  }
  //  else {
@@ -238,7 +236,6 @@ app.post('/register', function (req, res) {
         password : req.body.pass,
         admin : req.body.admin
       }
-      req.session.user = newUser;
       db.collection('users').save(newUser, function (err, result) {
         if (err) {
           req.session.reset()

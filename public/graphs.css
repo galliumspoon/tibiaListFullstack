@@ -1,0 +1,74 @@
+body, html {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  /*justify-content: center;
+  align-items: center;*/
+  font-family: "fira-sans-2", Verdana, sans-serif;
+}
+
+
+.graph {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  height: 40%;
+  align-items: center;
+}
+
+.keys {
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+  align-items: flex-end;
+}
+
+.key:last-child {
+  height: 60px;
+}
+
+.key {
+  height: 30px;
+}
+
+.data {
+  position: relative;
+  height: 100%;
+}
+
+.data table{
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+tbody {
+  display: flex;
+  width: 80%;
+}
+
+tr {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  justify-content: center;
+  vertical-align: bottom;
+}
+
+p {
+  margin: 0;
+  padding: 0;
+}
+
+.quant {
+  background-color: yellow;
+}
+
+.name {
+  height: 30px;
+}
+/*1._ */

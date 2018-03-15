@@ -1,0 +1,140 @@
+<!-- //for confirming Child Changes
+//on button press will change child change to False -->
+<!-- will display all of child changes == true items = -->
+<!-- will not let you view if not logged in as admin/redirect to add if logged in or login if not -->
+
+<!DOCTYPE html>
+<html lang=”en”>
+
+<head>
+  <title>It's going tibia K.</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- <link rel="shortcut icon" href="favicon.ico" /> -->
+  <!-- <link href="https://fonts.googleapis.com/css?family=Poiret+One" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="tibiaList.css"> -->
+</head>
+
+<body>
+  <!-- will display to the public based on whether or not it is a child change -->
+  <div id="container">
+    <div class="item" id="labels">
+      <p>Code</p><p>Name</p><p>Quantity</p><p></p>
+    </div>
+    <table id="items">
+      <caption>Addition Requests</caption>
+      <% for (var i = 0; i < items.length; i++)  {%>
+        <% if (items[i].itemReusable) {%>
+          <tr class="item" id='<%=items[i].itemSerial %>'>
+            <td><%=items[i].itemSerial %></td>
+            <td><%=items[i].itemName %></td>
+            <td><%=items[i].itemQuantity %></td>
+            <td><button class="addButton" action="/items" method="POST">Add</button></td>
+            <td><button class="delreqbutton">Delete Request</button></td>
+          </tr>
+        <% } %>
+      <% } %>
+    </table>
+    <table id="deletes">
+      <caption>Delete Requests</caption>
+      <% for (var i = 0; i < deletes.length; i++)  {%>
+        <% if (deletes[i].itemReusable == null) {%>
+          <tr class="delet" id='<%=deletes[i].itemSerial %>'>
+            <td><%=deletes[i].itemSerial %></td>
+            <td><%=deletes[i].itemName %></td>
+            <td><%=deletes[i].itemQuantity %></td>
+            <td><button class="delbutton" >Delete</button></td>
+            <td><button class="reqbutton" >Delete Request</button></td>
+          </tr>
+        <% } %>
+      <% } %>
+    </table>
+  </div>
+
+</body>
+
+
+<script>
+
+//regular deleting
+var dels = document.getElementsByClassName('delbutton')
+
+for (let i = 0; i < dels.length; i++) {
+  dels[i].addEventListener('click', function() {
+    let itemSerial = dels[i].parentElement.parentElement.getAttribute('id')
+    let toDel = document.getElementById(itemSerial)
+    toDel.parentElement.removeChild(toDel)
+    fetch('/items', {
+      method: 'delete',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        'itemSerial': itemSerial
+      })
+    })
+    .then(function(res) {
+      if (res.ok) return res.json()
+    }).
+    then(function(data) {
+      console.log(data)
+    })
+  })
+
+}
+
+//deleting delete requests
+var reqs = document.getElementsByClassName('reqbutton')
+
+for (let i = 0; i < reqs.length; i++) {
+  reqs[i].addEventListener('click', function() {
+    let itemSerial = reqs[i].parentElement.parentElement.getAttribute('id')
+    let toDelReq = document.getElementById(itemSerial)
+    toDel.parentElement.removeChild(toDelReq)
+    fetch('/deletes', {
+      method: 'delete',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        'itemSerial': itemSerial
+      })
+    })
+    .then(function(res) {
+      if (res.ok) return res.json()
+    }).
+    then(function(data) {
+      console.log(data)
+    })
+  })
+}
+
+//deleting add requests
+var addreqs = document.getElementsByClassName('delreqbutton')
+
+for (let i = 0; i < reqs.length; i++) {
+  addreqs[i].addEventListener('click', function() {
+    let itemSerial = addreqs[i].parentElement.parentElement.getAttribute('id')
+    let toDelAdd = document.getElementById(itemSerial)
+    toDel.parentElement.removeChild(toDelAdd)
+    fetch('/iteems', {
+      method: 'delete',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        'itemSerial': itemSerial
+      })
+    })
+    .then(function(res) {
+      if (res.ok) return res.json()
+    }).
+    then(function(data) {
+      console.log(data)
+    })
+  })
+}
+
+</script>
+
+</html>

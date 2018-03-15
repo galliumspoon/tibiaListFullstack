@@ -4,19 +4,51 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- <link rel="shortcut icon" href="favicon.ico" /> -->
+  <!-- <link rel="stylesheet" type="text/css" href="graphs.css"> -->
 </head>
 
 <body>
-  <table id="totalGraph">
-    <caption>Item Stock</caption>
-    <% for (var i = 0; i < items.length; i++) {%>
-      <tr class="iTim" id='<%=items[i].itemSerial %>'>
-        <th scope="row"><%=items[i].itemName %></th>
-        <td class="quant"><%=items[i].itemQuantity %></td>
-      </tr>
-    <% } %>
-  </table>
-</body>
+  <% let numsReuse = []; %>
+  <% let numsDispose = []; %>
 
+  <div class="graph" id="graphReusable">
+    <div class="keys" id="keysReusable">
+      <% for (var key = 0; key < reuseKeys.length; key++) {%>
+        <p class="key"><%= reuseKeys[key] %></p>
+      <% } %>
+    </div>
+    <div class="data" id="dataReusable">
+      <table class="data" id="dataReusable">
+        <caption>Item Stock – Reusable</caption>
+        <% for (var i = 0; i < items.length; i++) {%>
+          <% if (items[i].itemReusable) {%>
+            <tr class="iTim" id='<%=items[i].itemSerial %>' >
+              <th scope="row" class="name"><%=items[i].itemName %></th>
+              <td class="quant" style="height: <%=(items[i].itemQuantity / 5 ) * 30 %>px"><%=items[i].itemQuantity %></td>
+            </tr>
+          <% } %>
+        <% } %>
+      </table>
+    </div>
+  </div>
+  <div class="graph" id="graphDisposable">
+    <div class="keys" id="keysDisposable">
+      <% for (var ki = 0; ki < disposeKeys.length; ki++) {%>
+        <p class="key"><%= disposeKeys[ki] %></p>
+      <% } %>
+    </div>
+    <table class="data" id="dataDisposable">
+      <caption>Item Stock – Disposable</caption>
+      <% for (var i = 0; i < items.length; i++) {%>
+        <% if (items[i].itemReusable == null) {%>
+          <tr class="iTim" id='<%=items[i].itemSerial %>'>
+            <th scope="row"><%=items[i].itemName %></th>
+            <td class="quant"><%=items[i].itemQuantity %></td>
+          </tr>
+        <% } %>
+      <% } %>
+    </table>
+  </div>
+</body>
 
 </html>

@@ -1,0 +1,41 @@
+<!-- will show/hide login/signup based on clicks -->
+<!-- will only show logout button when logged in -->
+<!-- consider adding a thing that prevents old users from making accts search if user popup/don't submit -->
+<html>
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="favicon.ico" />
+</head>
+
+<body>
+  <form id="register" action="/register" method="POST">
+    <div id="inputsRegister">
+      <input name="username" type="text" placeholder="username" required/>
+      <input name="email" type="email" placeholder="email" required/>
+      <input name="pass" type="password" placeholder="password" required/>
+      <input name="admin" type="checkbox" />
+      <button type="submit">Submit</button>
+    </div>
+    <div id="registerUserCheck">
+      <% if (exists) {%>
+        <p>The account with email <%=exists %> exists!</p>
+      <% } %>
+    </div>
+  </form>
+  <form id="login" action="/login" method="POST">
+    <div id="inputsLogin">
+      <input name="emailLogin" type="email" placeholder="email" required/>
+      <input name="passLogin" type="password" placeholder="password" required/>
+      <button type="submit">Login</button>
+    </div>
+    <div id="loginUserChecks">
+      <% if (error) {%>
+        <p><%= error%></p>
+      <% } %>
+    </div>
+  </form>
+</body>
+
+</html>
